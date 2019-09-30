@@ -4,6 +4,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     >
+    <data>
+        <variable
+            name="myName"
+            type="com.github_kotlin.udacity_aboutme.MyName" />
+    </data>
     <LinearLayout android:layout_width="match_parent"
         android:orientation="vertical"
 
@@ -11,12 +16,13 @@
         tools:context=".MainActivity">
 
         <TextView
+            android:id="@+id/name_text"
             style="@style/NameStyle"
             android:layout_width="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto"
-            android:text="@string/text_1"
+            android:text="@={myName.name}"
             />
 
         <EditText
@@ -41,7 +47,7 @@
             android:id="@+id/nickname_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView"
+            android:text="@={myName.nickname}"
             android:layout_gravity="center"
             android:textAlignment="center"
             android:visibility="invisible"
