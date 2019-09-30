@@ -19,7 +19,6 @@ class MainActivity : AppCompatActivity() {
     private val myName: MyName = MyName("Anshul Gupta")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        setContentView(R.layout.activity_main)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main)
 
         binding.myName = myName
@@ -27,9 +26,7 @@ class MainActivity : AppCompatActivity() {
         binding.doneButton.setOnClickListener {
             addNickname(it)
         }
-//        findViewById<Button>(R.id.done_button).setOnClickListener {
-//            addNickname(it)
-//        }
+
     }
 
     private fun addNickname(view: View){
@@ -37,7 +34,6 @@ class MainActivity : AppCompatActivity() {
         binding.apply {
             invalidateAll()
             myName?.nickname = nicknameEdit.text.toString()
-//            binding.nicknameText.text = binding.nicknameEdit.text
             binding.nicknameEdit.visibility =View.GONE
             binding.doneButton.visibility = View.GONE
             binding.nicknameText.visibility = View.VISIBLE
