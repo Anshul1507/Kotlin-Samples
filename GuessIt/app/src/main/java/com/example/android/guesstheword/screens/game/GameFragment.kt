@@ -51,40 +51,23 @@ class GameFragment : Fragment() {
                 container,
                 false
         )
-        Log.i("GameFragment","GameFragment viewModel Called!")
+        Log.i("GameFragment", "GameFragment viewModel Called!")
         viewModel = ViewModelProviders.of(this).get(GameViewModel::class.java)
 
         binding.gameViewModel = viewModel
+        binding.lifecycleOwner = this.viewLifecycleOwner
 
-        viewModel.score.observe(this, Observer {
-              binding.scoreText.text = it.toString()
-        })
-        viewModel.word.observe(this, Observer {
-            binding.wordText.text = it.toString()
-        })
         viewModel.currentTime.observe(this, Observer {
             binding.timerText.text = DateUtils.formatElapsedTime(it)
         })
         viewModel.eventGameFinish.observe(this, Observer {
-            if(it){
-                gameFinished()
+            if (it) {
+                val action = GameFragmentDirections.actionGameToScore(viewModel.score.value ?: 0)
+                findNavController(this).navigate(action)
                 viewModel.onGameFinishComplete()
             }
         })
         return binding.root
 
     }
-
-
-
-    /**
-     * Called when the game is finished
-     * Any type of navigation is not come under view model
-     */
-    private fun gameFinished() {
-        val action = GameFragmentDirections.actionGameToScore(viewModel.score.value ?: 0)
-        findNavController(this).navigate(action)
-    }
-
-
 }
