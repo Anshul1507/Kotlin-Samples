@@ -56,10 +56,7 @@ class GameFragment : Fragment() {
 
         binding.gameViewModel = viewModel
         binding.lifecycleOwner = this.viewLifecycleOwner
-
-        viewModel.currentTime.observe(this, Observer {
-            binding.timerText.text = DateUtils.formatElapsedTime(it)
-        })
+        
         viewModel.eventGameFinish.observe(this, Observer {
             if (it) {
                 val action = GameFragmentDirections.actionGameToScore(viewModel.score.value ?: 0)
