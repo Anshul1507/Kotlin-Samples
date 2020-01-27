@@ -6,19 +6,24 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class GameViewModel : ViewModel(){
-    // The current word
+    //for this class use 'private'
     private val _word = MutableLiveData<String>()
+    //For other class uses
     val word : LiveData<String>
         get() = _word
-    // The current score
+
     private val _score = MutableLiveData<Int>()
     val score : LiveData<Int>
         get() = _score
-    // The list of words - the front of the list is the next word to guess
+
     private lateinit var wordList: MutableList<String>
 
+    private val _eventGameFinish = MutableLiveData<Boolean>()
+    val eventGameFinish : LiveData<Boolean>
+        get() = _eventGameFinish
+
     init {
-        Log.i("GameViewModel","GameViewModel created!")
+        _eventGameFinish.value = false
         resetList()
         nextWord()
         _score.value = 0
@@ -67,7 +72,7 @@ class GameViewModel : ViewModel(){
     private fun nextWord() {
         //Select and remove a word from the list
         if (wordList.isEmpty()) {
-            //gameFinished()
+            _eventGameFinish.value = true
         } else {
             _word.value = wordList.removeAt(0)
         }
@@ -83,5 +88,9 @@ class GameViewModel : ViewModel(){
      fun onCorrect() {
         _score.value = (score.value)?.plus(1)
         nextWord()
+    }
+
+    fun onGameFinishComplete(){
+        _eventGameFinish.value = false
     }
 }
