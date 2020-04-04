@@ -27,6 +27,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.example.android.trackmysleepquality.R
 import com.example.android.trackmysleepquality.database.SleepDatabase
 import com.example.android.trackmysleepquality.databinding.FragmentSleepTrackerBinding
+import kotlinx.android.synthetic.main.fragment_sleep_tracker.*
 
 /**
  * A fragment with buttons to record start and end times for sleep, which are saved in
@@ -55,7 +56,7 @@ class SleepTrackerFragment : Fragment() {
                         this,viewModelFactory
                 ).get(SleepTrackerViewModel::class.java)
         binding.sleepTrackerViewModel = sleepTrackerViewModel
-        binding.lifecycleOwner
+        binding.setLifecycleOwner { lifecycle }
         return binding.root
     }
 }
