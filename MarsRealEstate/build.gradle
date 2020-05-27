@@ -16,7 +16,7 @@ buildscript {
         version_navigation = "2.3.0-alpha01"
         version_retrofit = "2.9.0"
         version_recyclerview = "1.2.0"
-    }sAS
+    }
     repositories {
         google()
         jcenter()
