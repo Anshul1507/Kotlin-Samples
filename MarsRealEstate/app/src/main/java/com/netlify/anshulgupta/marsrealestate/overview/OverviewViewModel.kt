@@ -19,10 +19,10 @@ class OverviewViewModel : ViewModel() {
         get() = _status
 
     //Adding DataClass externally with MutableLiveData for accessing sub-objects
-    private val _property = MutableLiveData<MarsProperty>()
+    private val _properties = MutableLiveData<List<MarsProperty>>()
 
-    val property: LiveData<MarsProperty>
-        get() = _property
+    val properties: LiveData<List<MarsProperty>>
+        get() = _properties
 
     //For working with co-routines -> Need to create a job and then use that job with co-routine scope in terms of dispatcher
     private var viewModelJob = Job()
@@ -38,7 +38,7 @@ class OverviewViewModel : ViewModel() {
             try {
                 val listResult = getPropertiesDeferred
                 if (listResult.isNotEmpty()){
-                    _property.value = listResult[0]
+                    _properties.value = listResult
                 }
 //                _status.value = "Success: ${listResult.size} Mars properties retrieved!"
             } catch (t: Throwable) {
