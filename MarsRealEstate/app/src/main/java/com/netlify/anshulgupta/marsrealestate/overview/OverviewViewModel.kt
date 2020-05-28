@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.netlify.anshulgupta.marsrealestate.network.MarsApi
-import com.netlify.anshulgupta.marsrealestate.network.MarsProperty
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 
 class OverviewViewModel : ViewModel() {
@@ -17,21 +17,31 @@ class OverviewViewModel : ViewModel() {
     val response: LiveData<String>
         get() = _response
 
+    //For working with co-routines -> Need to create a job and then use that job with co-routine scope in terms of dispatcher
+    private var viewModelJob = Job()
+    private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
+
     init {
         getMarsRealEstateProperties()
     }
 
     private fun getMarsRealEstateProperties() {
-        MarsApi.retrofitService.getProperties().enqueue( object: Callback<List<MarsProperty>> {
-            override fun onFailure(call: Call<List<MarsProperty>>, t: Throwable) {
+        coroutineScope.launch {
+
+            val getPropertiesDeferred = MarsApi.retrofitService.getPropertiesAsync()
+            try {
+                val listResult = getPropertiesDeferred
+                _response.value = "Success: ${listResult.size} Mars properties retrieved!"
+            }catch (t: Throwable){
                 _response.value = "Failure: " + t.message
             }
 
-            override fun onResponse(call: Call<List<MarsProperty>>, response: Response<List<MarsProperty>>) {
-                _response.value = "Success: ${response.body()?.size} Mars properties retrieved!"
-            }
-        })
+        }
 
-        _response.value = "Set the Mars API Response here!"
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        viewModelJob.cancel()
     }
 }
