@@ -25,7 +25,7 @@ class OverviewViewModel : ViewModel() {
 
     //For working with co-routines -> Need to create a job and then use that job with co-routine scope in terms of dispatcher
     private var viewModelJob = Job()
-    private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.IO)
+    private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
     init {
         getMarsRealEstateProperties()
