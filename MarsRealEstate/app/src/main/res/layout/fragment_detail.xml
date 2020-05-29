@@ -5,6 +5,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="viewModel"
+            type="com.netlify.anshulgupta.marsrealestate.detail.DetailViewModel" />
+
+    </data>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -20,6 +27,7 @@
                 android:layout_width="0dp"
                 android:layout_height="266dp"
                 android:scaleType="centerCrop"
+                app:imageUrl="@{viewModel.selectedProperty.imgSrcUrl}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -32,6 +40,7 @@
                 android:layout_marginTop="16dp"
                 android:textColor="#de000000"
                 android:textSize="39sp"
+                android:text="@{viewModel.displayPropertyType}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/main_photo_image"
                 tools:text="To Rent" />
@@ -43,6 +52,7 @@
                 android:layout_marginTop="8dp"
                 android:textColor="#de000000"
                 android:textSize="20sp"
+                android:text="@{String.valueOf(viewModel.displayPropertyPrice)}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/property_type_text"
                 tools:text="$100,000" />
