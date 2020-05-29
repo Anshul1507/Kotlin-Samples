@@ -3,19 +3,39 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-    
+
     <data>
+
         <variable
             name="property"
             type="com.netlify.anshulgupta.marsrealestate.network.MarsProperty" />
     </data>
-    <ImageView
-        android:id="@+id/mars_image"
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="170dp"
-        android:scaleType="centerCrop"
-        android:adjustViewBounds="true"
-        android:padding="2dp"
-        app:imageUrl="@{property.imgSrcUrl}"
-        tools:src="@tools:sample/backgrounds/scenic"/>
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/mars_image"
+            android:layout_width="match_parent"
+            android:layout_height="170dp"
+            android:adjustViewBounds="true"
+            android:padding="4dp"
+            android:scaleType="centerCrop"
+            app:imageUrl="@{property.imgSrcUrl}"
+            tools:src="@tools:sample/backgrounds/scenic" />
+
+        <TextView
+            android:id="@+id/text_type"
+            android:layout_below="@id/mars_image"
+            android:textSize="24sp"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:textColor="@android:color/background_dark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{property.type}" />
+    </RelativeLayout>
+
+
 </layout>
