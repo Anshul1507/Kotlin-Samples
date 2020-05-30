@@ -46,7 +46,10 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/chooseRecipientFragment"
+            app:popUpToInclusive="true"
+            />
     </fragment>
 
     <fragment
@@ -66,7 +69,10 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/specifyAmountFragment"
+            app:popUpToInclusive="true"
+            />
     </fragment>
 
     <fragment
