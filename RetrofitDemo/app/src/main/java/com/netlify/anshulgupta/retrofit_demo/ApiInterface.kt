@@ -3,6 +3,7 @@ package com.netlify.anshulgupta.retrofit_demo
 import com.netlify.anshulgupta.retrofit_demo.DataClasses.UserItem
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
@@ -23,7 +24,7 @@ private val retrofit = Retrofit.Builder()
 interface ApiInterface {
 
     @GET("users")
-    suspend fun getAllUsers(): List<UserItem>
+    fun getAllUsers(): Call<List<UserItem>>
 }
 
 object UserAPI {
