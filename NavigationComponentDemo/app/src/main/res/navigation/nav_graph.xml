@@ -56,13 +56,28 @@
         android:id="@+id/confirmationFragment"
         android:name="com.netlify.anshulgupta.navigationcomponentdemo.ConfirmationFragment"
         android:label="fragment_confirmation"
-        tools:layout="@layout/fragment_confirmation" />
+        tools:layout="@layout/fragment_confirmation" >
+
+        <argument
+            android:name="recipient"
+            android:defaultValue="None"/>
+
+        <argument
+            android:name="amount"
+            app:argType="com.netlify.anshulgupta.navigationcomponentdemo.MoneyHandler"/>
+
+    </fragment>
 
     <fragment
         android:id="@+id/specifyAmountFragment"
         android:name="com.netlify.anshulgupta.navigationcomponentdemo.SpecifyAmountFragment"
         android:label="fragment_specify_amount"
         tools:layout="@layout/fragment_specify_amount">
+
+        <!-- Receiver always hold the arguments! -->
+        <argument
+            android:name="recipient"
+            android:defaultValue="None" />
         <action
             android:id="@+id/action_specifyAmountFragment_to_confirmationFragment"
             app:destination="@id/confirmationFragment"
