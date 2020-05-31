@@ -36,6 +36,8 @@ class SpecifyAmountFragment : Fragment() ,View.OnClickListener{
         view.findViewById<Button>(R.id.cancel_btn).setOnClickListener(this)
         val msg = "Sending money to $recipient"
         view.findViewById<TextView>(R.id.recipient).text = msg
+
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

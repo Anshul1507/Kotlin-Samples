@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -28,6 +29,13 @@ class ChooseRecipientFragment : Fragment(),View.OnClickListener {
         navController = Navigation.findNavController(view)
         view.findViewById<Button>(R.id.next_btn).setOnClickListener(this)
         view.findViewById<Button>(R.id.cancel_btn).setOnClickListener(this)
+
+        val callback: OnBackPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                navController.popBackStack(R.id.mainFragment, false)
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
     }
 
     override fun onClick(v: View?) {
