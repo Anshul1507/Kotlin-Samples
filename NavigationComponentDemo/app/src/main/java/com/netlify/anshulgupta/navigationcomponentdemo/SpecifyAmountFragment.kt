@@ -47,7 +47,7 @@ class SpecifyAmountFragment : Fragment() ,View.OnClickListener{
         when(v!!.id){
             R.id.send_btn -> {
                 debugger("Next Button in Choose Recipient Clicked.")
-                if(!TextUtils.isEmpty(input_amount.text.toString())){
+                if( !TextUtils.isEmpty(input_amount.text.toString()) && !input_amount.text.toString().equals("0")){
                     val amount = MoneyHandler(BigDecimal(input_amount.text.toString()))
                     val bundle = bundleOf(
                         "recipient" to recipient,
@@ -55,6 +55,8 @@ class SpecifyAmountFragment : Fragment() ,View.OnClickListener{
                     )
 
                     navController.navigate(R.id.action_specifyAmountFragment_to_confirmationFragment,bundle)
+                }else{
+                    Toast.makeText(activity,"Enter some amount",Toast.LENGTH_SHORT).show()
                 }
 
             }

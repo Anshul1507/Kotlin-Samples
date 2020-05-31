@@ -7,10 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import kotlinx.android.synthetic.main.fragment_choose_recipient.*
+import kotlinx.android.synthetic.main.fragment_specify_amount.*
+import java.util.*
 
 class ChooseRecipientFragment : Fragment(),View.OnClickListener {
 
@@ -31,9 +34,14 @@ class ChooseRecipientFragment : Fragment(),View.OnClickListener {
         when(v!!.id){
             R.id.next_btn -> {
                 debugger("Next Button in Choose Recipient Clicked.")
-                if(!TextUtils.isEmpty(input_recipient.text.toString())){
+                if( !TextUtils.isEmpty(input_recipient.text.toString())
+                    && input_recipient.text.toString().toLowerCase(Locale.ROOT)[0] >= 'a'
+                    && input_recipient.text.toString().toLowerCase(Locale.ROOT)[0] <= 'z'
+                ){
                     val bundle = bundleOf("recipient" to input_recipient.text.toString())
                     navController.navigate(R.id.action_chooseRecipientFragment_to_specifyAmountFragment,bundle)
+                }else{
+                    Toast.makeText(activity,"Enter some name first",Toast.LENGTH_SHORT).show()
                 }
 
             }
