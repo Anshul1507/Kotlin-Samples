@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
         //Setting up nav back home button
         navController = Navigation.findNavController(this,R.id.nav_host_fragment)
         val appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.mainFragment,R.id.specifyAmountFragment,R.id.confirmationFragment
+            R.id.mainFragment,R.id.specifyAmountFragment
         ))
         NavigationUI.setupActionBarWithNavController(this,navController,appBarConfiguration)
     }

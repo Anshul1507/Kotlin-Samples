@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.netlify.anshulgupta.navigationcomponentdemo.MainFragment"
-        android:label="fragment_main"
+        android:label="Home Page"
         tools:layout="@layout/fragment_main">
         <action
             android:id="@+id/action_mainFragment_to_chooseRecipientFragment"
@@ -38,7 +38,7 @@
     <fragment
         android:id="@+id/chooseRecipientFragment"
         android:name="com.netlify.anshulgupta.navigationcomponentdemo.ChooseRecipientFragment"
-        android:label="fragment_choose_recipient"
+        android:label="Select Recipient"
         tools:layout="@layout/fragment_choose_recipient">
         <action
             android:id="@+id/action_chooseRecipientFragment_to_specifyAmountFragment"
@@ -55,7 +55,7 @@
     <fragment
         android:id="@+id/confirmationFragment"
         android:name="com.netlify.anshulgupta.navigationcomponentdemo.ConfirmationFragment"
-        android:label="fragment_confirmation"
+        android:label="Confirmation Page"
         tools:layout="@layout/fragment_confirmation" >
 
         <argument
@@ -71,7 +71,7 @@
     <fragment
         android:id="@+id/specifyAmountFragment"
         android:name="com.netlify.anshulgupta.navigationcomponentdemo.SpecifyAmountFragment"
-        android:label="fragment_specify_amount"
+        android:label="Select Amount"
         tools:layout="@layout/fragment_specify_amount">
 
         <!-- Receiver always hold the arguments! -->
@@ -93,13 +93,13 @@
     <fragment
         android:id="@+id/viewBalanceFragment"
         android:name="com.netlify.anshulgupta.navigationcomponentdemo.ViewBalanceFragment"
-        android:label="fragment_view_balance"
+        android:label="Balance"
         tools:layout="@layout/fragment_view_balance" />
 
     <fragment
         android:id="@+id/viewTransactionFragment"
         android:name="com.netlify.anshulgupta.navigationcomponentdemo.ViewTransactionFragment"
-        android:label="fragment_view_transaction"
+        android:label="Transactions"
         tools:layout="@layout/fragment_view_transaction" />
 
 </navigation>

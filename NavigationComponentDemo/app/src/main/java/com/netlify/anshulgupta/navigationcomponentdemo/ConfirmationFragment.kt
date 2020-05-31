@@ -6,9 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 
 class ConfirmationFragment : Fragment() {
 
+    lateinit var navController: NavController
     lateinit var recipient: String
     private lateinit var amountMoney : MoneyHandler
 
@@ -24,9 +28,17 @@ class ConfirmationFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        navController = Navigation.findNavController(view)
         val amount = amountMoney.money
         val confirmationMessage = "You have sent $ $amount to $recipient"
         view.findViewById<TextView>(R.id.confirmation_message).text = confirmationMessage
+
+        val callback: OnBackPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                navController.popBackStack(R.id.mainFragment, false)
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
     }
 
 }
