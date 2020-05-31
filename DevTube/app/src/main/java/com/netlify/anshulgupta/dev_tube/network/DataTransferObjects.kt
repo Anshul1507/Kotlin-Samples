@@ -1,5 +1,6 @@
 package com.netlify.anshulgupta.dev_tube.network
 
+import com.netlify.anshulgupta.dev_tube.db.DBVideo
 import com.netlify.anshulgupta.dev_tube.ui.Video
 import com.squareup.moshi.JsonClass
 
@@ -18,9 +19,21 @@ data class NetworkVideo(
 )
 
 /**
+ * VideoHolder holds a list of Videos.
+ *
+ * This is to parse first level of our network result which looks like
+ *
+ * {
+ *   "videos": []
+ * }
+ */
+@JsonClass(generateAdapter = true)
+data class NetworkVideoContainer(val videos: List<NetworkVideo>)
+
+/**
  * Convert Network results to database objects
  */
-public fun NetworkVideoContainer.asDomainModel():List<Video> {
+fun NetworkVideoContainer.asDomainModel():List<Video> {
     return videos.map {
         Video (
             title = it.title,
@@ -32,14 +45,15 @@ public fun NetworkVideoContainer.asDomainModel():List<Video> {
     }
 }
 
-/**
- * VideoHolder holds a list of Videos.
- *
- * This is to parse first level of our network result which looks like
- *
- * {
- *   "videos": []
- * }
- */
-@JsonClass(generateAdapter = true)
-data class NetworkVideoContainer(val videos: List<NetworkVideo>)
+/* Convert Data Transfer object to db objects */
+fun NetworkVideoContainer.asDataBaseModel(): Array<DBVideo> {
+    return videos.map {
+        DBVideo(
+            title = it.title,
+            updated = it.updated,
+            description = it.description,
+            url = it.url,
+            thumbnail = it.thumbnail
+        )
+    }.toTypedArray()
+}
