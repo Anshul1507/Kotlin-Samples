@@ -2,6 +2,7 @@ package com.netlify.anshulgupta.dev_tube.ui
 
 import android.app.Application
 import androidx.lifecycle.*
+import com.netlify.anshulgupta.dev_tube.db.getDB
 import com.netlify.anshulgupta.dev_tube.network.Network
 import com.netlify.anshulgupta.dev_tube.network.asDomainModel
 import kotlinx.coroutines.CoroutineScope
@@ -16,23 +17,16 @@ class DevTubeViewModel(application: Application) : AndroidViewModel(application)
     private val viewModelJob = SupervisorJob()
     private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
-    private val _playlist = MutableLiveData<List<Video>>()
-    val playlist: LiveData<List<Video>>
-        get() = _playlist
+    private val db = getDB(application)
+
+    private val videoRepository = VideoRepository(db)
 
     init {
-        refreshDataFromNetwork()
-    }
-
-    private fun refreshDataFromNetwork() = viewModelScope.launch {
-        try {
-            val playlist = Network.devTube.getPlayList()
-            _playlist.postValue(playlist.asDomainModel())
-        }catch (networkError : IOException){
-            // Show an infinite loading spinner if the request fails
-            // challenge exercise: show an error to the user if the network request fails
+        viewModelScope.launch {
+            videoRepository.refreshVideos()
         }
     }
+    val playlist = videoRepository.videos
 
     override fun onCleared() {
         super.onCleared()
