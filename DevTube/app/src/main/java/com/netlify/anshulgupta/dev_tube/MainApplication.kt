@@ -2,6 +2,7 @@ package com.netlify.anshulgupta.dev_tube
 
 import android.app.Application
 import android.os.Build
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.work.*
 import com.netlify.anshulgupta.dev_tube.work.RefreshDataWork
 import kotlinx.coroutines.CoroutineScope
@@ -24,6 +25,7 @@ class MainApplication : Application() {
      */
     override fun onCreate() {
         super.onCreate()
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.getDefaultNightMode())
         Timber.plant(Timber.DebugTree())
         delayedInit()
     }
