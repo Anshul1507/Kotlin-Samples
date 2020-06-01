@@ -10,6 +10,10 @@ import com.netlify.anshulgupta.dev_tube.ui.VideoRepository
 import retrofit2.HttpException
 
 class RefreshDataWork (appContext: Context, params: WorkerParameters): CoroutineWorker(appContext,params) {
+
+    companion object {
+        const val WORK_NAME = "RefreshDataWork"
+    }
     override suspend fun doWork(): Result {
         val database = getDB(applicationContext)
         val repository = VideoRepository(database)
