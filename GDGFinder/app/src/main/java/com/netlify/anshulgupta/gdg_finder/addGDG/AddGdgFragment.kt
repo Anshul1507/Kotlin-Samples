@@ -1,10 +1,11 @@
-package com.netlify.anshulgupta.gdg_finder
+package com.netlify.anshulgupta.gdg_finder.addGDG
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.netlify.anshulgupta.gdg_finder.R
 
 /**
  * A simple [Fragment] subclass.
