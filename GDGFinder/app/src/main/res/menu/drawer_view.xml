@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <item android:id="@+id/gdg_search" android:title="@string/gdg_search"/>
-    <item android:id="@+id/gdg_apply" android:title="@string/gdg_apply"/>
-
-</menu>
