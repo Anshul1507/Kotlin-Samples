@@ -41,6 +41,10 @@ class BlurViewModel(application: Application) : AndroidViewModel(application) {
         outputWorkInfos = workManager.getWorkInfosByTagLiveData(TAG_OUTPUT)
     }
     internal fun applyBlur(blurLevel: Int) {
+        val constraints = Constraints.Builder()
+                .setRequiresCharging(true)
+                .build()
+
         //WorkRequest to cleanup temporary images
         var continuation = workManager.
                 beginUniqueWork(
@@ -59,6 +63,7 @@ class BlurViewModel(application: Application) : AndroidViewModel(application) {
         }
         //WorkRequest to save the image to the filesystem
         val save = OneTimeWorkRequestBuilder<SaveImageToFileWorker>()
+                .setConstraints(constraints)
                 .addTag(TAG_OUTPUT)
                 .build()
 
