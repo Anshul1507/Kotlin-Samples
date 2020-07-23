@@ -22,6 +22,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -34,4 +38,18 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
+
+    ext {
+        version_moshi = "1.9.2"
+        version_retrofit = "2.9.0"
+        version_recyclerview = "1.1.0"
+    }
+    implementation "com.squareup.retrofit2:retrofit:$version_retrofit"
+    implementation "com.squareup.moshi:moshi:$version_moshi"
+    implementation "com.squareup.moshi:moshi-kotlin:$version_moshi"
+    implementation "com.squareup.retrofit2:converter-moshi:$version_retrofit"
+    implementation 'com.squareup.retrofit2:converter-gson:2.8.1'
+
+    //RecyclerView
+    implementation "androidx.recyclerview:recyclerview:$version_recyclerview"
 }
