@@ -14,6 +14,7 @@ import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 
+@Suppress("DEPRECATION")
 class SaveImageToFileWorker (ctx: Context, params: WorkerParameters) : Worker(ctx,params) {
 
     private val title = "Blurred Image"
