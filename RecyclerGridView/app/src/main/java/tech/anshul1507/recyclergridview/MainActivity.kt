@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 class MainActivity : AppCompatActivity() {
 
     private var apiDataList = ArrayList<modelApi>()
+    private var groupMap = hashMapOf<Int, List<Int>>()
+    private var index: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,4 +82,28 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    private fun groupingData(list: ArrayList<modelApi>) {
+        var defaultOld: Int = -1
+        val tempList: ArrayList<Int> = ArrayList<Int>()
+        tempList.clear()
+        index = list[0].date.toString().substring(5, 6).toInt()
+        for (i in list) {
+            if (i.date.toString().substring(5, 6) == defaultOld.toString()) {
+
+                tempList.add(i.score as Int)
+            } else {
+
+                if (defaultOld != -1) {
+                    groupMap[defaultOld] = tempList.toList()
+                    tempList.clear()
+                }
+                defaultOld = i.date.toString().substring(5, 6).toInt()
+                tempList.add(i.score as Int)
+            }
+        }
+        //adding last case in which we have left else loop
+        if (tempList.isNotEmpty()) {
+            groupMap[defaultOld] = tempList.toList()
+        }
+    }
 }
