@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         //setting data into grid-recycler view
         recycler_view.layoutManager = LinearLayoutManager(this)
         recycler_view.adapter = RecyclerAdapter(index, this, groupMap)
-
+        recycler_view.isNestedScrollingEnabled = false
     }
 
     private fun apiData() {
@@ -181,10 +181,51 @@ class MainActivity : AppCompatActivity() {
             val idx = mIdx
             val item = list[position + idx] as List<Int>
             val monthsList = mutableListOf ("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec")
+            context?.let { GridAdapter(it, item) }?.let {
+                setGridViewHeightBasedOnChildren(
+                    holder.itemView.gridview, 6,
+                    it
+                )
+            }
             holder.itemView.text_month.text = monthsList[position + idx]
-            holder.itemView.gridview.adapter = context?.let { MainActivity2.GridAdapter(it, item) }
+            holder.itemView.gridview.adapter = context?.let { GridAdapter(it, item) }
+
         }
 
-    }
+        private fun setGridViewHeightBasedOnChildren(
+            gridView: GridView,
+            noOfColumns: Int,
+            gridAdapter: ListAdapter
+        ) {
+            val gridViewAdapter = gridAdapter
+                ?: // adapter is not set yet
+                return
+            var totalHeight: Int //total height to set on grid view
+            val items = gridViewAdapter.count //no. of items in the grid
+            val rows: Int //no. of rows in grid
+            val listItem = gridViewAdapter.getView(0, null, gridView)
+            listItem.measure(0, 0)
+            totalHeight = listItem.measuredHeight
+            val x: Float
+            if (items > noOfColumns) {
+                x = items / noOfColumns.toFloat()
 
+                //Check if exact no. of rows of rows are available, if not adding 1 extra row
+                rows = if (items % noOfColumns != 0) {
+                    (x + 1).toInt()
+                } else {
+                    x.toInt()
+                }
+                totalHeight *= rows
+
+                //Adding any vertical space set on grid view
+                totalHeight += gridView.verticalSpacing * rows
+            }
+
+            //Setting height on grid view
+            val params = gridView.layoutParams
+            params.height = totalHeight
+            gridView.layoutParams = params
+        }
+    }
 }
