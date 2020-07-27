@@ -8,8 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.GridView
+import android.widget.ListAdapter
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.item.view.*
+import kotlinx.android.synthetic.main.item_main.view.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,6 +30,10 @@ class MainActivity : AppCompatActivity() {
         apiData()
         //to grouping apiDataList into HashMaps
         groupingData(apiDataList)
+
+        //setting data into grid-recycler view
+        recycler_view.layoutManager = LinearLayoutManager(this)
+        recycler_view.adapter = RecyclerAdapter(index, this, groupMap)
 
     }
 
@@ -143,6 +152,39 @@ class MainActivity : AppCompatActivity() {
         override fun getItemId(p0: Int): Long {
             return p0.toLong()
         }
+    }
+
+    class RecyclerAdapter(idx: Int, mContext: Context, hashList: HashMap<Int, List<Int>>) :
+        RecyclerView.Adapter<RecyclerAdapter.MyViewHolder>() {
+        private var list = hashList
+        private var mIdx = idx
+        private var context: Context? = mContext
+
+        class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+            companion object {
+                //layout objects/class objects/keys
+            }
+        }
+
+        @SuppressLint("InflateParams")
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
+            val inflater =
+                context!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            val view = inflater.inflate(R.layout.item_main, null, false)
+
+            return MyViewHolder(view)
+        }
+
+        override fun getItemCount() = list.size
+
+        override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+            val idx = mIdx
+            val item = list[position + idx] as List<Int>
+            val monthsList = mutableListOf ("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec")
+            holder.itemView.text_month.text = monthsList[position + idx]
+            holder.itemView.gridview.adapter = context?.let { MainActivity2.GridAdapter(it, item) }
+        }
+
     }
 
 }
