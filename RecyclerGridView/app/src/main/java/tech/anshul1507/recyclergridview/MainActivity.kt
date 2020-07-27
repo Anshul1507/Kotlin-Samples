@@ -1,7 +1,15 @@
 package tech.anshul1507.recyclergridview
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.BaseAdapter
+import android.widget.GridView
 import androidx.appcompat.app.AppCompatActivity
+import kotlinx.android.synthetic.main.item.view.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -15,7 +23,8 @@ class MainActivity : AppCompatActivity() {
 
         //to add JSON data in list
         apiData()
-
+        //to grouping apiDataList into HashMaps
+        groupingData(apiDataList)
 
     }
 
@@ -106,4 +115,34 @@ class MainActivity : AppCompatActivity() {
             groupMap[defaultOld] = tempList.toList()
         }
     }
+
+    class GridAdapter(mContext: Context, mList: List<Int>) : BaseAdapter() {
+        private var list = mList
+        private var context: Context? = mContext
+
+        override fun getCount(): Int {
+            return list.size
+        }
+
+        @SuppressLint("InflateParams", "ViewHolder")
+        override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
+            val itemGrid = this.list[position]
+            val inflater =
+                context!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            val view = inflater.inflate(R.layout.item, null, false)
+
+            view.imgItem.setImageResource(itemGrid)
+
+            return view
+        }
+
+        override fun getItem(p0: Int): Any {
+            return list[p0]
+        }
+
+        override fun getItemId(p0: Int): Long {
+            return p0.toLong()
+        }
+    }
+
 }
