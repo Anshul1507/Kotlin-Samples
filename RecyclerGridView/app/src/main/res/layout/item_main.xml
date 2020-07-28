@@ -19,7 +19,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:horizontalSpacing="4dp"
-        android:numColumns="4"
+        android:numColumns="6"
+        android:layout_margin="8dp"
         android:stretchMode="columnWidth"
-        android:verticalSpacing="4dp" />
+        android:verticalSpacing="6dp" />
 </LinearLayout>

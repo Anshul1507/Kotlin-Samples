@@ -183,7 +183,7 @@ class MainActivity : AppCompatActivity() {
             val monthsList = mutableListOf ("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec")
             context?.let { GridAdapter(it, item) }?.let {
                 setGridViewHeightBasedOnChildren(
-                    holder.itemView.gridview, 4,
+                    holder.itemView.gridview, 6,
                     it
                 )
             }
