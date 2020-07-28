@@ -5,11 +5,19 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/text_year"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:paddingTop="4dp"
+        android:text="2020"
+        android:textSize="12sp" />
+
+    <TextView
         android:id="@+id/text_month"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:padding="10dp"
         android:text="Month"
         android:textSize="20sp" />
 
@@ -17,10 +25,10 @@
         android:id="@+id/gridview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="8dp"
         android:gravity="center"
         android:horizontalSpacing="4dp"
         android:numColumns="6"
-        android:layout_margin="8dp"
         android:stretchMode="columnWidth"
         android:verticalSpacing="6dp" />
 </LinearLayout>

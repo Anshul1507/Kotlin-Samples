@@ -19,8 +19,9 @@ import kotlinx.android.synthetic.main.item_main.view.*
 class MainActivity : AppCompatActivity() {
 
     private var apiDataList = ArrayList<modelApi>()
-    private var groupMap = hashMapOf<Int, List<Int>>()
-    private var index: Int = 0
+    private var groupMap = hashMapOf<String, List<Int>>()
+    private lateinit var index: String
+    private var indexCounterList = ArrayList<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +34,7 @@ class MainActivity : AppCompatActivity() {
 
         //setting data into grid-recycler view
         recycler_view.layoutManager = LinearLayoutManager(this)
-        recycler_view.adapter = RecyclerAdapter(index, this, groupMap)
+        recycler_view.adapter = RecyclerAdapter(indexCounterList, this, groupMap)
         recycler_view.isNestedScrollingEnabled = false
     }
 
@@ -88,40 +89,45 @@ class MainActivity : AppCompatActivity() {
         apiDataList.add(modelApi("20200915", R.drawable.group_12871))
         apiDataList.add(modelApi("20200916", R.drawable.group_12871))
         apiDataList.add(modelApi("20200917", R.drawable.group_12871))
-        apiDataList.add(modelApi("20200918", R.drawable.group_12871))
-        apiDataList.add(modelApi("20200919", R.drawable.group_12871))
-        apiDataList.add(modelApi("20200913", R.drawable.group_12871))
-        apiDataList.add(modelApi("20200914", R.drawable.group_12871))
-        apiDataList.add(modelApi("20200915", R.drawable.group_12871))
-        apiDataList.add(modelApi("20200916", R.drawable.group_12871))
-        apiDataList.add(modelApi("20200917", R.drawable.group_12871))
-        apiDataList.add(modelApi("20200918", R.drawable.group_12871))
-        apiDataList.add(modelApi("20200919", R.drawable.group_12871))
+
+        apiDataList.add(modelApi("20210918", R.drawable.group_12871))
+        apiDataList.add(modelApi("20210919", R.drawable.group_12871))
+        apiDataList.add(modelApi("20210913", R.drawable.group_12871))
+        apiDataList.add(modelApi("20210914", R.drawable.group_12871))
+        apiDataList.add(modelApi("20210915", R.drawable.group_12871))
+
+        apiDataList.add(modelApi("20220916", R.drawable.group_12871))
+        apiDataList.add(modelApi("20220917", R.drawable.group_12871))
+        apiDataList.add(modelApi("20220918", R.drawable.group_12871))
+        apiDataList.add(modelApi("20220919", R.drawable.group_12871))
 
     }
 
     private fun groupingData(list: ArrayList<modelApi>) {
-        var defaultOld: Int = -1
+        var defaultOld = ""
         val tempList: ArrayList<Int> = ArrayList<Int>()
         tempList.clear()
-        index = list[0].date.toString().substring(5, 6).toInt()
+        index = list[0].date.toString().substring(0, 6) //index -> "202007" [2020->year & 07->month]
         for (i in list) {
-            if (i.date.toString().substring(5, 6) == defaultOld.toString()) {
+            if (i.date.toString().substring(0, 6) == defaultOld) {
 
                 tempList.add(i.score as Int)
             } else {
 
-                if (defaultOld != -1) {
+                if (defaultOld.isNotEmpty()) {
+                    indexCounterList.add(defaultOld)
                     groupMap[defaultOld] = tempList.toList()
                     tempList.clear()
                 }
-                defaultOld = i.date.toString().substring(5, 6).toInt()
+                defaultOld = i.date.toString().substring(0, 6)
                 tempList.add(i.score as Int)
             }
         }
         //adding last case in which we have left else loop
         if (tempList.isNotEmpty()) {
+            indexCounterList.add(defaultOld)
             groupMap[defaultOld] = tempList.toList()
+            tempList.clear()
         }
     }
 
@@ -154,10 +160,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    class RecyclerAdapter(idx: Int, mContext: Context, hashList: HashMap<Int, List<Int>>) :
+    class RecyclerAdapter(idxList : ArrayList<String>, mContext: Context, hashList: HashMap<String, List<Int>>) :
         RecyclerView.Adapter<RecyclerAdapter.MyViewHolder>() {
         private var list = hashList
-        private var mIdx = idx
+        private var mIdx = idxList
         private var context: Context? = mContext
 
         class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -178,8 +184,10 @@ class MainActivity : AppCompatActivity() {
         override fun getItemCount() = list.size
 
         override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-            val idx = mIdx
-            val item = list[position + idx] as List<Int>
+//            val monthStart = mIdx.substring(5,6)
+//            val yearStart = mIdx.substring(0,4)
+
+            val item = list[mIdx[position]] as List<Int>
             val monthsList = mutableListOf ("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec")
             context?.let { GridAdapter(it, item) }?.let {
                 setGridViewHeightBasedOnChildren(
@@ -187,7 +195,8 @@ class MainActivity : AppCompatActivity() {
                     it
                 )
             }
-            holder.itemView.text_month.text = monthsList[position + idx]
+            holder.itemView.text_month.text = monthsList[mIdx[position].substring(5,6).toInt()]
+            holder.itemView.text_year.text = mIdx[position].substring(0,4)
             holder.itemView.gridview.adapter = context?.let { GridAdapter(it, item) }
 
         }
